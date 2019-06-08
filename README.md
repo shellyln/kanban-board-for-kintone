@@ -163,7 +163,7 @@ This is probably a bug in Safari (and iOS WebView).
 If the GPU rendering element has conditional CSS selectors with GPU related properties,
 the renderer blends garbage GPU surfaces.
 
-### patch ([kanban-board.lsx.lisp](https://github.com/shellyln/kanban-board-for-kintone/blob/master/kanban-board.lsx.lisp#L115))
+### patch ([kanban-board.lsx.lisp](https://github.com/shellyln/kanban-board-for-kintone/blob/master/kanban-board.lsx.lisp#L115-L129))
 ```css
 ...
 
