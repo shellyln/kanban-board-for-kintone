@@ -155,6 +155,41 @@
 
 ------------------------
 
+# 🐞 Bugs
+
+## Rendering is broken when used on iOS devices.
+
+This is probably a bug in Safari (and iOS WebView).  
+If the GPU rendering element has conditional CSS selectors with GPU related properties,
+the renderer blends unnecessary GPU surfaces.
+
+### patch (kanban-board.lsx.lisp)
+```css
+...
+
+.sticky-note {
+    ...
+    /* transform: rotate(-0.25deg); */
+}
+.sticky-link:nth-of-type(2n) .sticky-note {
+    /* transform: rotate(0.15deg); */
+}
+.sticky-link:nth-of-type(3n) .sticky-note {
+    /* transform: rotate(0.65deg); */
+}
+.sticky-link:nth-of-type(5n) .sticky-note {
+    /* transform: rotate(-0.65deg); */
+}
+.sticky-link .sticky-note:hover {
+    /* filter: drop-shadow(7px 7px 2px #888); */
+    /* transform: rotate(-3deg); */
+}
+
+...
+```
+
+------------------------
+
 
 # ⚖️ License
 * MIT
