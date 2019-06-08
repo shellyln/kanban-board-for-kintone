@@ -161,7 +161,7 @@
 
 This is probably a bug in Safari (and iOS WebView).  
 If the GPU rendering element has conditional CSS selectors with GPU related properties,
-the renderer blends unnecessary GPU surfaces.
+the renderer blends garbage GPU surfaces.
 
 ### patch (kanban-board.lsx.lisp)
 ```css
