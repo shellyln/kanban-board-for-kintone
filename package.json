@@ -1,0 +1,32 @@
+{
+  "private": true,
+  "name": "kanban-board-for-kintone",
+  "version": "0.1.0",
+  "description": "Kanban board for kintone",
+  "keywords": [
+    "kintone",
+    "kanban-board",
+    "kanban",
+    "reporting",
+    "Ménneu",
+    "Liyad",
+    "Lisp",
+    "LSX",
+    "Markdown",
+    "markdown-it"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/shellyln/kanban-board-for-kintone.git"
+  },
+  "author": "shellyln",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/shellyln/kanban-board-for-kintone/issues"
+  },
+  "homepage": "https://shellyln.github.io/"
+}
