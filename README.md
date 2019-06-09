@@ -14,6 +14,9 @@
 ### Kanban board
 ![Kanban board](./images/kanban-board-1.png)
 
+### Calendar view
+![Calendar view](./images/calendar-view.png)
+
 ### List view
 ![List view](./images/list-view.png)
 
