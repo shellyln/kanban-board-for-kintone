@@ -1,5 +1,5 @@
-# Kanban Board for [Ménneu Reporting App for kintone](https://github.com/shellyln/menneu-reporting-app-for-kintone)
-
+# ✴️ Kanban Board for [Ménneu Reporting App for kintone](https://github.com/shellyln/menneu-reporting-app-for-kintone)
+Kanban boad app for kintone.
 
 ## 📍 Features
 
