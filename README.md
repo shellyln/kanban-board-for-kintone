@@ -62,12 +62,12 @@
 * https://unpkg.com/react-dom@16/umd/react-dom.production.min.js
 * [menneu.min.js](https://shellyln.github.io/releases/menneu/0.1.0/menneu.min.js)
   * **Please do not register the above URL directly. It is not a CDN URL.**
-* [app-buttons.js](https://github.com/shellyln/menneu-reporting-app-for-kintone/blob/master/app-buttons.js)
+* [app-buttons.js](https://github.com/shellyln/menneu-reporting-app-for-kintone/blob/master/src/user-app/app-buttons.js)
   * **Please do not register the above URL directly. It is not a CDN URL.**
   * Please edit this file to show the button of the defined report.
     * `eXnhAMYWrBVFMczJ__REPORT_APP_ID`: ReportingApp's app id.
     * `eXnhAMYWrBVFMczJ__REPORT_BUTTONS`: Report definition record ids you want to use in this app.
-* [kintone-report-buttons.js](https://github.com/shellyln/menneu-reporting-app-for-kintone/blob/master/kintone-report-buttons.js)
+* [kintone-report-buttons.js](https://github.com/shellyln/menneu-reporting-app-for-kintone/blob/master/src/user-app/kintone-report-buttons.js)
   * **Please do not register the above URL directly. It is not a CDN URL.**
 
 #### CSS
