@@ -60,8 +60,7 @@ Kanban boad app for kintone.
 #### JS (PC, Mobile)
 * https://unpkg.com/react@16/umd/react.production.min.js
 * https://unpkg.com/react-dom@16/umd/react-dom.production.min.js
-* [menneu.min.js](https://shellyln.github.io/releases/menneu/0.1.0/menneu.min.js)
-  * **Please do not register the above URL directly. It is not a CDN URL.**
+* https://unpkg.com/mdne@0.1.33/contents/assets/vendor/menneu-0.1.0/menneu.min.js
 * [app-buttons.js](https://github.com/shellyln/menneu-reporting-app-for-kintone/blob/master/src/user-app/app-buttons.js)
   * **Please do not register the above URL directly. It is not a CDN URL.**
   * Please edit this file to show the button of the defined report.
