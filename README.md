@@ -5,7 +5,8 @@ Kanban boad app for kintone.
 
 * Kanban body text written in Markdown
 * Due date
-* Customizable `status` and `teams`/`stories`
+* Customizable `status` and lane (`teams`/`stories`)
+* Status and lane changing by DnD.
 * Show QR code
 
 
