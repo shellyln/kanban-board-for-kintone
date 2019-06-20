@@ -37,12 +37,14 @@
            (class "team-or-story-team-c") )))
 
     ;; Set your kintone environment domain and app id
-    ($let record-url-base "https://??????????.cybozu.com/k/15/")
-    nil)
+    ($let url-base "https://?????????.cybozu.com/k/")
+    ($let app-id   15)
 
+    ($let api-url-base ($concat url-base "v1/"))
+    ($let record-url-base ($concat url-base app-id "/"))
 
-;; Report styles
-($last ($let reportStyles """$concat
+    ;; Report styles
+    ($let reportStyles """$concat
     body {
         width: 100%;
         height: 100%;
@@ -100,6 +102,8 @@
         flex-direction: row;
         flex-wrap: wrap;
         align-items: flex-start;
+        width: 100%;
+        height: 100%;
     }
     .sticky-note {
         position: relative;
@@ -113,6 +117,9 @@
         padding: 5px;
         word-wrap: break-word;
         transform: rotate(-0.25deg);
+    }
+    .sticky-link {
+        display: block;
     }
     .sticky-link:nth-of-type(2n) .sticky-note {
         transform: rotate(0.15deg);
@@ -159,7 +166,66 @@
         color: red;
         font-weight: bold;
     }
-""") nil)
+    """)
+
+    ;; Report script
+    ($let reportScript """$concat
+    async function updateStatus(target, el) {
+        try {
+            const resp = await fetch('%%%($concat api-url-base "record.json")', {
+                method: 'PUT',
+                credentials: 'include',
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Content-Type': 'application/json; charset=utf-8',
+                },
+                body: JSON.stringify({
+                    app: '%%%($get app-id)',
+                    id: String(el.attributes['data-record-id'].value),
+                    record: {
+                        'team_or_story': {
+                            'value': target.attributes['data-team-or-story'].value,
+                        },
+                        'status': {
+                            'value': target.attributes['data-status'].value,
+                        },
+                    },
+                    '__REQUEST_TOKEN__': '%%%($get $REQUEST-TOKEN)',
+                }),
+            });
+            if (resp.ok) {
+                console.log(JSON.stringify(await resp.json()));
+            } else {
+                console.log(resp.statusText);
+                throw new Error('Failed to update record: ' + resp.statusText);
+            }
+        } catch (e) {
+            console.log(e);
+            throw new Error('Failed to update record: ' + e.message);
+        }
+    }
+    function onStickyDragStart(ev) {
+        ev.dataTransfer.setData('elId', ev.target.id);
+    }
+    function onStickyDragOver(ev) {
+        ev.preventDefault();
+    }
+    function onStickyDrop(ev) {
+        (async () => {
+            try {
+                const elId = ev.dataTransfer.getData('elId');
+                const el = document.getElementById(elId);
+                const target = ev.currentTarget;
+                await updateStatus(target, el);
+                target.appendChild(el);
+            } catch (e) {
+                alert(e.message);
+            }
+        })();
+        ev.preventDefault();
+    }
+    """)
+    nil)
 
 
 ;; Components
@@ -168,7 +234,11 @@
     ($defun Sticky (team-or-story status)
         (div (@ (class ("sticky-wrap"
                         ($if ::team-or-story:class ::team-or-story:class nil)
-                        ($if ::status:class ::status:class nil) )))
+                        ($if ::status:class ::status:class nil) ))
+                (data-team-or-story ::team-or-story:value)
+                (data-status ::status:value)
+                (ondragover "onStickyDragOver(event)")
+                (ondrop     "onStickyDrop(event)") )
             ($=for ($filter records (|-> (x) use (team-or-story status)
                                         ($and (=== ::team-or-story:value ::x:team_or_story:value)
                                               (=== ::status:value        ::x:status:value) )))
@@ -177,8 +247,12 @@
                                   (< ($datetime-from-iso ::$data:due_date:value) ($today)) )) nil)
                 (a (@ (class "sticky-link")
                       (href ($concat record-url-base "show#record=" ::$data:$id:value))
-                      (target "_blank") )
-                    (div (@ (class ("sticky-note" ($if expired "expired"))))
+                      (target "_blank")
+                      (id ($eval ($gensym)))
+                      (data-record-id ::$data:$id:value)
+                      (draggable "true")
+                      (ondragstart "onStickyDragStart(event)")   )
+                    (div (@ (class ("sticky-note" ($if expired "expired"))) )
                         (Markdown ::$data:description:value)
                         ($=if ::$data:barcode:value
                             (Qr (@ (cellSize 0.45) (data ::$data:barcode:value))) )
@@ -208,5 +282,6 @@
                     ($=for status-list ($last ($let status $data) nil)
                         (td (@ (class (($if ::team-or-story:class ::team-or-story:class nil)
                                        ($if ::status:class ::status:class nil) )))
-                        (Sticky team-or-story $data))) ))))))
+                        (Sticky team-or-story $data))) ))))
+        (script (@ (dangerouslySetInnerHTML reportScript))) ))
 
